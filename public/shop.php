@@ -37,6 +37,7 @@ try {
 }
 
 $cartCount = isset($_SESSION['cart']) ? array_sum($_SESSION['cart']) : 0;
+$isAdmin   = isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -52,16 +53,26 @@ $cartCount = isset($_SESSION['cart']) ? array_sum($_SESSION['cart']) : 0;
     <nav class="bg-stone-900 text-white shadow-md">
         <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
             <a href="home.php" class="text-2xl font-black text-orange-500 tracking-wider">JENGO HARDWARE</a>
-            <div class="space-x-6">
+            <div class="space-x-6 flex items-center">
                 <a href="home.php" class="hover:text-orange-400 font-medium">Home</a>
                 <a href="shop.php" class="text-orange-400 font-medium">Shop</a>
-                <a href="cart.php" class="hover:text-orange-400 font-medium">Cart (<?= $cartCount ?>)</a>
-                <?php if (isset($_SESSION['user_id'])): ?>
-                    <a href="customer_dashboard.php" class="hover:text-orange-400 font-medium">Dashboard</a>
-                    <a href="logout.php" class="bg-orange-600 hover:bg-orange-700 px-4 py-2 rounded text-sm font-bold">Logout</a>
+                
+                <?php if ($isAdmin): ?>
+                    <a href="../admin/dashboard.php" class="bg-orange-600 hover:bg-orange-700 px-4 py-2 rounded text-sm font-bold">Admin Dashboard</a>
+                    <a href="logout.php" class="hover:text-orange-400 text-sm font-medium">Logout</a>
                 <?php else: ?>
-                    <a href="login.php" class="hover:text-orange-400 font-medium">Login</a>
-                    <a href="register.php" class="bg-orange-600 hover:bg-orange-700 px-4 py-2 rounded text-sm font-bold">Register</a>
+                    <a href="cart.php" class="hover:text-orange-400 font-medium">Cart (<?= $cartCount ?>)</a>
+                    <?php if (isset($_SESSION['user_id'])): ?>
+                        <?php if (($_SESSION['user_role'] ?? '') === 'attendant'): ?>
+                            <a href="../attendant/dashboard.php" class="hover:text-orange-400 font-medium">Attendant Desk</a>
+                        <?php else: ?>
+                            <a href="customer_dashboard.php" class="hover:text-orange-400 font-medium">Dashboard</a>
+                        <?php endif; ?>
+                        <a href="logout.php" class="bg-orange-600 hover:bg-orange-700 px-4 py-2 rounded text-sm font-bold">Logout</a>
+                    <?php else: ?>
+                        <a href="login.php" class="hover:text-orange-400 font-medium">Login</a>
+                        <a href="register.php" class="bg-orange-600 hover:bg-orange-700 px-4 py-2 rounded text-sm font-bold">Register</a>
+                    <?php endif; ?>
                 <?php endif; ?>
             </div>
         </div>
@@ -69,7 +80,14 @@ $cartCount = isset($_SESSION['cart']) ? array_sum($_SESSION['cart']) : 0;
 
     <!-- Main Section -->
     <div class="max-w-7xl mx-auto px-4 py-8 flex-grow w-full">
-        <h1 class="text-3xl font-bold mb-6">Browse Products</h1>
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-3xl font-bold">Browse Products</h1>
+            <?php if ($isAdmin): ?>
+                <span class="text-xs bg-amber-100 text-amber-900 border border-amber-300 font-bold px-3 py-1.5 rounded-full flex items-center">
+                    🔒 Admin Mode — Catalog Purchasing Disabled
+                </span>
+            <?php endif; ?>
+        </div>
 
         <!-- Search & Filter Form -->
         <form method="GET" action="shop.php" class="bg-white p-4 rounded-lg shadow-sm mb-8 flex flex-col md:flex-row gap-4">
@@ -107,7 +125,13 @@ $cartCount = isset($_SESSION['cart']) ? array_sum($_SESSION['cart']) : 0;
                                     <?= $prod['stock'] > 0 ? 'In Stock (' . $prod['stock'] . ')' : 'Out of Stock' ?>
                                 </span>
                             </div>
-                            <?php if ($prod['stock'] > 0): ?>
+
+                            <!-- Purchase Actions vs Admin Badge -->
+                            <?php if ($isAdmin): ?>
+                                <div class="mt-4 w-full bg-stone-100 border border-stone-200 text-stone-600 text-xs font-bold py-2.5 rounded text-center">
+                                    🔒 Admin View Only
+                                </div>
+                            <?php elseif ($prod['stock'] > 0): ?>
                                 <form action="cart.php" method="POST" class="mt-4">
                                     <input type="hidden" name="action" value="add">
                                     <input type="hidden" name="product_id" value="<?= $prod['id'] ?>">

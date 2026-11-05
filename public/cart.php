@@ -6,6 +6,12 @@ error_reporting(E_ALL);
 session_start();
 require_once __DIR__ . '/../config/db.php';
 
+// Auth Guard: Block Admin users from shopping cart actions
+if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin') {
+    header('Location: ../admin/dashboard.php');
+    exit;
+}
+
 if (!isset($_SESSION['cart'])) {
     $_SESSION['cart'] = [];
 }
@@ -51,7 +57,7 @@ if (!empty($_SESSION['cart'])) {
                 $subtotal = $p['price'] * $qty;
                 $totalAmount += $subtotal;
                 $cartItems[] = [
-                    'product' => $p,
+                    'product'  => $p,
                     'quantity' => $qty,
                     'subtotal' => $subtotal
                 ];
@@ -72,17 +78,21 @@ $cartCount = array_sum($_SESSION['cart']);
     <title>Shopping Cart - Jengo Hardware</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-50 text-stone-800 min-h-screen">
+<body class="bg-gray-50 text-stone-800 min-h-screen flex flex-col">
 
     <nav class="bg-stone-900 text-white shadow-md">
         <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
             <a href="home.php" class="text-2xl font-black text-orange-500 tracking-wider">JENGO HARDWARE</a>
-            <div class="space-x-6">
+            <div class="space-x-6 flex items-center">
                 <a href="home.php" class="hover:text-orange-400 font-medium">Home</a>
                 <a href="shop.php" class="hover:text-orange-400 font-medium">Shop</a>
                 <a href="cart.php" class="text-orange-400 font-medium">Cart (<?= $cartCount ?>)</a>
                 <?php if (isset($_SESSION['user_id'])): ?>
-                    <a href="customer_dashboard.php" class="hover:text-orange-400 font-medium">Dashboard</a>
+                    <?php if (($_SESSION['user_role'] ?? '') === 'attendant'): ?>
+                        <a href="../attendant/dashboard.php" class="hover:text-orange-400 font-medium">Attendant Desk</a>
+                    <?php else: ?>
+                        <a href="customer_dashboard.php" class="hover:text-orange-400 font-medium">Dashboard</a>
+                    <?php endif; ?>
                     <a href="logout.php" class="bg-orange-600 hover:bg-orange-700 px-4 py-2 rounded text-sm font-bold">Logout</a>
                 <?php else: ?>
                     <a href="login.php" class="hover:text-orange-400 font-medium">Login</a>
@@ -92,7 +102,7 @@ $cartCount = array_sum($_SESSION['cart']);
         </div>
     </nav>
 
-    <div class="max-w-5xl mx-auto px-4 py-8">
+    <div class="max-w-5xl mx-auto px-4 py-8 flex-grow w-full">
         <h1 class="text-3xl font-bold mb-6">Shopping Cart</h1>
 
         <?php if (empty($cartItems)): ?>
@@ -101,7 +111,7 @@ $cartCount = array_sum($_SESSION['cart']);
                 <a href="shop.php" class="bg-orange-600 text-white font-bold px-6 py-2 rounded-lg hover:bg-orange-700">Browse Shop</a>
             </div>
         <?php else: ?>
-            <div class="bg-white rounded-lg shadow-sm overflow-hidden mb-6">
+            <div class="bg-white rounded-lg shadow-sm overflow-hidden mb-6 border border-stone-200">
                 <table class="w-full text-left border-collapse">
                     <thead>
                         <tr class="bg-stone-100 text-stone-600 text-sm border-b">
@@ -114,18 +124,18 @@ $cartCount = array_sum($_SESSION['cart']);
                     </thead>
                     <tbody>
                         <?php foreach ($cartItems as $item): ?>
-                            <tr class="border-b">
-                                <td class="p-4 font-bold"><?= htmlspecialchars($item['product']['name']) ?></td>
-                                <td class="p-4">KES <?= number_format($item['product']['price'], 2) ?></td>
+                            <tr class="border-b hover:bg-stone-50 transition">
+                                <td class="p-4 font-bold text-stone-900"><?= htmlspecialchars($item['product']['name']) ?></td>
+                                <td class="p-4 text-stone-700">KES <?= number_format($item['product']['price'], 2) ?></td>
                                 <td class="p-4">
                                     <form action="cart.php" method="POST" class="flex items-center gap-2">
                                         <input type="hidden" name="action" value="update">
                                         <input type="hidden" name="product_id" value="<?= $item['product']['id'] ?>">
                                         <input type="number" name="quantity" value="<?= $item['quantity'] ?>" min="1" max="<?= $item['product']['stock'] ?>" class="w-16 px-2 py-1 border rounded text-center">
-                                        <button type="submit" class="text-xs bg-stone-200 px-2 py-1 rounded font-semibold">Update</button>
+                                        <button type="submit" class="text-xs bg-stone-200 hover:bg-stone-300 px-2 py-1 rounded font-semibold text-stone-800">Update</button>
                                     </form>
                                 </td>
-                                <td class="p-4 font-bold">KES <?= number_format($item['subtotal'], 2) ?></td>
+                                <td class="p-4 font-bold text-stone-900">KES <?= number_format($item['subtotal'], 2) ?></td>
                                 <td class="p-4">
                                     <form action="cart.php" method="POST">
                                         <input type="hidden" name="action" value="remove">
@@ -139,12 +149,12 @@ $cartCount = array_sum($_SESSION['cart']);
                 </table>
             </div>
 
-            <div class="flex justify-between items-center bg-white p-6 rounded-lg shadow-sm border">
+            <div class="flex justify-between items-center bg-white p-6 rounded-lg shadow-sm border border-stone-200">
                 <div>
                     <span class="text-stone-500 text-sm">Total Amount:</span>
                     <p class="text-3xl font-extrabold text-stone-900">KES <?= number_format($totalAmount, 2) ?></p>
                 </div>
-                <a href="checkout.php" class="bg-orange-600 hover:bg-orange-700 text-white font-bold px-8 py-3 rounded-lg text-lg">Proceed to Checkout</a>
+                <a href="checkout.php" class="bg-orange-600 hover:bg-orange-700 text-white font-bold px-8 py-3 rounded-lg text-lg transition">Proceed to Checkout</a>
             </div>
         <?php endif; ?>
     </div>

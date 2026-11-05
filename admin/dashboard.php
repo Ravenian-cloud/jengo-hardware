@@ -47,7 +47,7 @@ try {
                 <a href="../public/shop.php" class="block py-2 px-3 rounded hover:bg-stone-800 font-medium">View Shop</a>
             </nav>
         </div>
-        <a href="../public/logout.php" class="block text-center bg-red-600 hover:bg-red-700 text-white font-bold py-2 rounded">Logout</a>
+        <a href="attendants.php" class="block py-2 px-3 rounded hover:bg-stone-800 font-medium">Enroll Attendants</a>
     </aside>
 
     <!-- Main Content -->
