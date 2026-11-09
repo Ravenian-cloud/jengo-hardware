@@ -53,18 +53,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register - Jengo Hardware</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/liquid-glass.css">
+    <script src="js/theme-mode.js" defer></script>
 </head>
-<body class="bg-stone-100 flex items-center justify-center min-h-screen">
-    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md border-t-4 border-orange-600">
-        <h2 class="text-2xl font-bold text-center text-stone-800 mb-2">Jengo Hardware</h2>
-        <p class="text-center text-stone-500 mb-6 text-sm">Create a new customer account</p>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md border-t-4 border-gray-600">
+        <h2 class="text-2xl font-bold text-center text-gray-800 mb-2">Jengo Hardware</h2>
+        <p class="text-center text-gray-500 mb-6 text-sm">Create a new customer account</p>
         
         <?php if ($error): ?>
-            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4 text-sm"><?= htmlspecialchars($error) ?></div>
+            <div class="bg-gray-200 border border-gray-500 text-gray-800 px-4 py-3 rounded mb-4 text-sm"><?= htmlspecialchars($error) ?></div>
         <?php endif; ?>
 
         <?php if ($success): ?>
-            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4 text-sm">
+            <div class="bg-gray-100 border border-gray-400 text-gray-700 px-4 py-3 rounded mb-4 text-sm">
                 <?= htmlspecialchars($success) ?>
                 <a href="login.php" class="underline font-bold ml-1">Login here</a>
             </div>
@@ -72,24 +74,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <form action="register.php" method="POST" class="space-y-4">
             <div>
-                <label class="block text-stone-700 text-sm font-semibold mb-1">Full Name</label>
-                <input type="text" name="name" required class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500">
+                <label class="block text-gray-700 text-sm font-semibold mb-1">Full Name</label>
+                <input type="text" name="name" required class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500">
             </div>
             <div>
-                <label class="block text-stone-700 text-sm font-semibold mb-1">Email Address</label>
-                <input type="email" name="email" required class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500">
+                <label class="block text-gray-700 text-sm font-semibold mb-1">Email Address</label>
+                <input type="email" name="email" required class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500">
             </div>
             <div>
-                <label class="block text-stone-700 text-sm font-semibold mb-1">Phone Number (2547XXXXXXXX)</label>
-                <input type="text" name="phone" placeholder="254712345678" required class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500">
+                <label class="block text-gray-700 text-sm font-semibold mb-1">Phone Number (2547XXXXXXXX)</label>
+                <input type="text" name="phone" placeholder="254712345678" required class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500">
             </div>
             <div>
-                <label class="block text-stone-700 text-sm font-semibold mb-1">Password</label>
-                <input type="password" name="password" required class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500">
+                <label class="block text-gray-700 text-sm font-semibold mb-1">Password</label>
+                <input type="password" name="password" required class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500">
             </div>
-            <button type="submit" class="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-2.5 rounded-lg transition duration-200">Register</button>
+            <button type="submit" class="w-full bg-gray-800 hover:bg-gray-700 text-white font-bold py-2.5 rounded-lg transition duration-200">Register</button>
         </form>
-        <p class="text-sm text-center text-stone-600 mt-5">Already registered? <a href="login.php" class="text-orange-600 font-bold hover:underline">Log in</a></p>
+        <p class="text-sm text-center text-gray-600 mt-5">Already registered? <a href="login.php" class="text-gray-700 font-bold hover:underline">Log in</a></p>
     </div>
 </body>
 </html>

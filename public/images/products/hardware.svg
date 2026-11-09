@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420">
+  <defs><linearGradient id="bg" x2="0" y2="1"><stop stop-color="#f8fafc"/><stop offset="1" stop-color="#e2e8f0"/></linearGradient></defs>
+  <rect width="640" height="420" fill="url(#bg)"/>
+  <ellipse cx="320" cy="340" rx="190" ry="23" fill="#94a3b8" opacity=".25"/>
+  <path d="M194 247 344 108l39 42-150 139z" fill="#f59e0b" stroke="#92400e" stroke-width="8" stroke-linejoin="round"/>
+  <path d="m342 110 34-32 84 89-34 32z" fill="#64748b" stroke="#334155" stroke-width="8" stroke-linejoin="round"/>
+  <path d="m188 252 34 37-30 30-58-9 12-48z" fill="#64748b" stroke="#334155" stroke-width="8" stroke-linejoin="round"/>
+  <text x="320" y="382" text-anchor="middle" fill="#334155" font-family="Arial,sans-serif" font-size="20" font-weight="700">JENGO HARDWARE</text>
+</svg>

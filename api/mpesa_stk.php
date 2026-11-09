@@ -6,6 +6,11 @@ error_reporting(E_ALL);
 session_start();
 require_once __DIR__ . '/../config/db.php';
 
+if (($_SESSION['user_role'] ?? '') === 'attendant') {
+    http_response_code(403);
+    die("Error: Attendants cannot place orders.");
+}
+
 // Auth Guard
 if (!isset($_SESSION['user_id'])) {
     die("Error: User must be logged in to initiate payment.");
@@ -129,25 +134,27 @@ try {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>M-Pesa STK Push - Jengo Hardware</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../public/css/liquid-glass.css">
+    <script src="../public/js/theme-mode.js" defer></script>
 </head>
-<body class="bg-stone-100 flex items-center justify-center min-h-screen">
-    <div class="bg-white p-8 rounded-lg shadow-md max-w-md w-full border-t-4 border-green-600 text-center">
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="bg-white p-8 rounded-lg shadow-md max-w-md w-full border-t-4 border-gray-600 text-center">
         <?php if (isset($res['ResponseCode']) && $res['ResponseCode'] == '0'): ?>
-            <div class="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold">✓</div>
-            <h2 class="text-2xl font-bold text-stone-800 mb-2">STK Push Sent!</h2>
-            <p class="text-stone-600 text-sm mb-4">Check your phone (<strong><?= htmlspecialchars($phone) ?></strong>) and enter your M-Pesa PIN to complete payment for Order #<?= $order_id ?>.</p>
-            <div class="bg-stone-50 p-3 rounded text-xs text-stone-500 font-mono mb-6">
+            <div class="w-16 h-16 bg-gray-100 text-gray-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold">✓</div>
+            <h2 class="text-2xl font-bold text-gray-800 mb-2">STK Push Sent!</h2>
+            <p class="text-gray-600 text-sm mb-4">Check your phone (<strong><?= htmlspecialchars($phone) ?></strong>) and enter your M-Pesa PIN to complete payment for Order #<?= $order_id ?>.</p>
+            <div class="bg-gray-50 p-3 rounded text-xs text-gray-500 font-mono mb-6">
                 CheckoutRequestID: <?= htmlspecialchars($res['CheckoutRequestID'] ?? 'N/A') ?>
             </div>
-            <a href="../public/customer_dashboard.php" class="inline-block w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2.5 rounded-lg">Go to Dashboard</a>
+            <a href="../public/customer_dashboard.php" class="inline-block w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-2.5 rounded-lg">Go to Dashboard</a>
         <?php else: ?>
-            <div class="w-16 h-16 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold">✕</div>
-            <h2 class="text-2xl font-bold text-red-600 mb-2">STK Push Failed</h2>
-            <p class="text-stone-600 text-sm mb-4"><?= htmlspecialchars($res['errorMessage'] ?? $res['ResponseDescription'] ?? 'An error occurred while connecting to Daraja API.') ?></p>
-            <div class="bg-red-50 text-red-800 p-3 rounded text-xs font-mono mb-6 text-left overflow-x-auto">
+            <div class="w-16 h-16 bg-gray-200 text-gray-700 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold">✕</div>
+            <h2 class="text-2xl font-bold text-gray-700 mb-2">STK Push Failed</h2>
+            <p class="text-gray-600 text-sm mb-4"><?= htmlspecialchars($res['errorMessage'] ?? $res['ResponseDescription'] ?? 'An error occurred while connecting to Daraja API.') ?></p>
+            <div class="bg-gray-100 text-gray-900 p-3 rounded text-xs font-mono mb-6 text-left overflow-x-auto">
                 <pre><?= htmlspecialchars(json_encode($res ?? [], JSON_PRETTY_PRINT)) ?></pre>
             </div>
-            <a href="../public/checkout.php" class="inline-block w-full bg-stone-800 hover:bg-stone-900 text-white font-bold py-2.5 rounded-lg">Return to Checkout</a>
+            <a href="../public/checkout.php" class="inline-block w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-2.5 rounded-lg">Return to Checkout</a>
         <?php endif; ?>
     </div>
 </body>

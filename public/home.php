@@ -5,6 +5,7 @@ error_reporting(E_ALL);
 
 session_start();
 require_once __DIR__ . '/../config/db.php';
+require_once __DIR__ . '/../config/product_images.php';
 
 try {
     // Fetch categories
@@ -27,34 +28,42 @@ $cartCount = isset($_SESSION['cart']) ? array_sum($_SESSION['cart']) : 0;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jengo Hardware - Home</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/liquid-glass.css">
+    <script src="js/theme-mode.js" defer></script>
 </head>
-<body class="bg-gray-50 text-stone-800 min-h-screen flex flex-col">
+<body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col">
 
     <!-- Navbar -->
-    <nav class="bg-stone-900 text-white shadow-md">
+    <nav class="bg-gray-900 text-white shadow-md">
         <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-            <a href="home.php" class="text-2xl font-black text-orange-500 tracking-wider">JENGO HARDWARE</a>
+            <a href="home.php" class="text-2xl font-black text-gray-300 tracking-wider">JENGO HARDWARE</a>
             <div class="space-x-6">
-                <a href="home.php" class="text-orange-400 font-medium">Home</a>
-                <a href="shop.php" class="hover:text-orange-400 font-medium">Shop</a>
-                <a href="cart.php" class="hover:text-orange-400 font-medium">Cart (<?= $cartCount ?>)</a>
+                <a href="home.php" class="text-gray-300 font-medium">Home</a>
+                <a href="shop.php" class="hover:text-gray-300 font-medium">Shop</a>
+                <?php if (($_SESSION['user_role'] ?? '') !== 'attendant'): ?>
+                    <a href="cart.php" class="hover:text-gray-300 font-medium">Cart (<?= $cartCount ?>)</a>
+                <?php endif; ?>
                 <?php if (isset($_SESSION['user_id'])): ?>
-                    <a href="customer_dashboard.php" class="hover:text-orange-400 font-medium">Dashboard</a>
-                    <a href="logout.php" class="bg-orange-600 hover:bg-orange-700 px-4 py-2 rounded text-sm font-bold">Logout</a>
+                    <?php if (($_SESSION['user_role'] ?? '') === 'attendant'): ?>
+                        <a href="../attendant/dashboard.php" class="hover:text-gray-300 font-medium">Attendant Desk</a>
+                    <?php else: ?>
+                        <a href="customer_dashboard.php" class="hover:text-gray-300 font-medium">Dashboard</a>
+                    <?php endif; ?>
+                    <a href="logout.php" class="bg-gray-800 hover:bg-gray-700 px-4 py-2 rounded text-sm font-bold">Logout</a>
                 <?php else: ?>
-                    <a href="login.php" class="hover:text-orange-400 font-medium">Login</a>
-                    <a href="register.php" class="bg-orange-600 hover:bg-orange-700 px-4 py-2 rounded text-sm font-bold">Register</a>
+                    <a href="login.php" class="hover:text-gray-300 font-medium">Login</a>
+                    <a href="register.php" class="bg-gray-800 hover:bg-gray-700 px-4 py-2 rounded text-sm font-bold">Register</a>
                 <?php endif; ?>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <div class="bg-stone-800 text-white py-16">
+    <div class="bg-gray-800 text-white py-16">
         <div class="max-w-7xl mx-auto px-4 text-center">
             <h1 class="text-4xl md:text-5xl font-black mb-4">Quality Building & Hardware Supplies</h1>
-            <p class="text-stone-300 text-lg mb-8 max-w-2xl mx-auto">Get high-grade cement, steel, plumbing, and electrical materials delivered directly to your site or picked up in-store.</p>
-            <a href="shop.php" class="bg-orange-600 hover:bg-orange-700 text-white font-bold px-8 py-3 rounded-lg text-lg inline-block">Browse All Supplies</a>
+            <p class="text-gray-300 text-lg mb-8 max-w-2xl mx-auto">Get high-grade cement, steel, plumbing, and electrical materials delivered directly to your site or picked up in-store.</p>
+            <a href="shop.php" class="bg-gray-800 hover:bg-gray-700 text-white font-bold px-8 py-3 rounded-lg text-lg inline-block">Browse All Supplies</a>
         </div>
     </div>
 
@@ -63,7 +72,7 @@ $cartCount = isset($_SESSION['cart']) ? array_sum($_SESSION['cart']) : 0;
         <h2 class="text-2xl font-bold mb-6">Popular Categories</h2>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
             <?php foreach ($categories as $cat): ?>
-                <a href="shop.php?category=<?= $cat['id'] ?>" class="bg-white p-6 rounded-lg border text-center font-bold hover:shadow-md hover:border-orange-500 transition">
+                <a href="shop.php?category=<?= $cat['id'] ?>" class="bg-white p-6 rounded-lg border text-center font-bold hover:shadow-md hover:border-gray-500 transition">
                     <?= htmlspecialchars($cat['name']) ?>
                 </a>
             <?php endforeach; ?>
@@ -72,19 +81,20 @@ $cartCount = isset($_SESSION['cart']) ? array_sum($_SESSION['cart']) : 0;
 
     <!-- Featured Products -->
     <div class="max-w-7xl mx-auto px-4 py-8 mb-12 flex-grow">
-        <h2 class="text-2xl font-bold mb-6">New Arrivals</h2>
+        <h2 class="text-2xl font-bold mb-2">New Arrivals</h2>
+        <p class="mb-6 text-sm text-gray-500">Product photos are representative; exact brands and packaging may vary.</p>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <?php foreach ($products as $prod): ?>
                 <div class="bg-white border rounded-lg overflow-hidden shadow-sm flex flex-col">
-                    <div class="h-40 bg-stone-200 flex items-center justify-center text-stone-500 font-semibold p-4 text-center">
-                        <?= htmlspecialchars($prod['name']) ?>
+                    <div class="h-40 bg-gray-200 flex items-center justify-center overflow-hidden">
+                        <img src="<?= htmlspecialchars(product_image_url($prod['photo'] ?? null), ENT_QUOTES, 'UTF-8') ?>" alt="<?= htmlspecialchars($prod['name'], ENT_QUOTES, 'UTF-8') ?>" class="h-full w-full object-cover">
                     </div>
                     <div class="p-5 flex flex-col flex-grow">
-                        <span class="text-xs text-orange-600 font-bold uppercase tracking-wider"><?= htmlspecialchars($prod['category_name']) ?></span>
-                        <h3 class="text-lg font-bold mt-1 text-stone-900"><?= htmlspecialchars($prod['name']) ?></h3>
+                        <span class="text-xs text-gray-700 font-bold uppercase tracking-wider"><?= htmlspecialchars($prod['category_name']) ?></span>
+                        <h3 class="text-lg font-bold mt-1 text-gray-900"><?= htmlspecialchars($prod['name']) ?></h3>
                         <div class="mt-auto pt-4 flex justify-between items-center">
-                            <span class="text-xl font-extrabold text-stone-800">KES <?= number_format($prod['price'], 2) ?></span>
-                            <a href="shop.php" class="text-sm font-bold text-orange-600 hover:underline">View in Shop →</a>
+                            <span class="text-xl font-extrabold text-gray-800">KES <?= number_format($prod['price'], 2) ?></span>
+                            <a href="shop.php" class="text-sm font-bold text-gray-700 hover:underline">View in Shop →</a>
                         </div>
                     </div>
                 </div>
@@ -92,7 +102,7 @@ $cartCount = isset($_SESSION['cart']) ? array_sum($_SESSION['cart']) : 0;
         </div>
     </div>
 
-    <footer class="bg-stone-900 text-stone-400 py-6 text-center text-sm border-t border-stone-800">
+    <footer class="bg-gray-900 text-gray-400 py-6 text-center text-sm border-t border-gray-800">
         &copy; <?= date('Y') ?> Jengo Hardware. All rights reserved.
     </footer>
 

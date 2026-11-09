@@ -64,21 +64,23 @@ try {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Attendants - Jengo Admin</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../public/css/liquid-glass.css">
+    <script src="../public/js/theme-mode.js" defer></script>
 </head>
-<body class="bg-stone-100 text-stone-800 min-h-screen flex">
+<body class="bg-gray-100 text-gray-800 min-h-screen flex">
 
     <!-- Sidebar -->
-    <aside class="w-64 bg-stone-900 text-white min-h-screen p-6 flex flex-col justify-between flex-shrink-0">
+    <aside class="w-64 bg-gray-900 text-white min-h-screen p-6 flex flex-col justify-between flex-shrink-0">
         <div>
-            <h2 class="text-xl font-black text-orange-500 tracking-wider mb-8">JENGO ADMIN</h2>
+            <h2 class="text-xl font-black text-gray-300 tracking-wider mb-8">JENGO ADMIN</h2>
             <nav class="space-y-3">
-                <a href="dashboard.php" class="block py-2 px-3 rounded hover:bg-stone-800 font-medium">Dashboard</a>
-                <a href="payments.php" class="block py-2 px-3 rounded hover:bg-stone-800 font-medium">Payment Logs</a>
-                <a href="attendants.php" class="block py-2 px-3 rounded bg-orange-600 font-bold text-white">Enroll Attendants</a>
-                <a href="../public/shop.php" class="block py-2 px-3 rounded hover:bg-stone-800 font-medium">View Shop</a>
+                <a href="dashboard.php" class="block py-2 px-3 rounded hover:bg-gray-800 font-medium">Dashboard</a>
+                <a href="payments.php" class="block py-2 px-3 rounded hover:bg-gray-800 font-medium">Payment Logs</a>
+                <a href="attendants.php" class="block py-2 px-3 rounded bg-gray-800 font-bold text-white">Enroll Attendants</a>
+                <a href="../public/shop.php" class="block py-2 px-3 rounded hover:bg-gray-800 font-medium">View Shop</a>
             </nav>
         </div>
-        <a href="inventory.php" class="block py-2 px-3 rounded hover:bg-stone-800 font-medium">Inventory Catalog</a>
+        <a href="inventory.php" class="block py-2 px-3 rounded hover:bg-gray-800 font-medium">Inventory Catalog</a>
     </aside>
 
     <!-- Main Content -->
@@ -86,65 +88,65 @@ try {
         <div class="flex justify-between items-center mb-8">
             <div>
                 <h1 class="text-3xl font-bold">Enroll Store Attendants</h1>
-                <p class="text-stone-500 text-sm">Register staff members who can process and fulfill orders from the attendant dashboard.</p>
+                <p class="text-gray-500 text-sm">Register staff members who can process and fulfill orders from the attendant dashboard.</p>
             </div>
         </div>
 
         <?php if (!empty($msg)): ?>
-            <div class="mb-6 p-4 bg-green-100 border-l-4 border-green-500 text-green-800 rounded text-sm font-medium">
+            <div class="mb-6 p-4 bg-gray-100 border-l-4 border-gray-500 text-gray-800 rounded text-sm font-medium">
                 <?= htmlspecialchars($msg) ?>
             </div>
         <?php endif; ?>
 
         <?php if (!empty($error)): ?>
-            <div class="mb-6 p-4 bg-red-100 border-l-4 border-red-500 text-red-800 rounded text-sm font-medium">
+            <div class="mb-6 p-4 bg-gray-200 border-l-4 border-gray-600 text-gray-900 rounded text-sm font-medium">
                 <?= htmlspecialchars($error) ?>
             </div>
         <?php endif; ?>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <!-- Add Attendant Form -->
-            <div class="bg-white p-6 rounded-lg shadow-sm border border-stone-200">
-                <h2 class="text-lg font-bold mb-4 text-stone-900">Add New Attendant</h2>
+            <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                <h2 class="text-lg font-bold mb-4 text-gray-900">Add New Attendant</h2>
                 <form method="POST" action="attendants.php" class="space-y-4">
                     <input type="hidden" name="action" value="add_attendant">
                     
                     <div>
-                        <label class="block text-xs font-bold text-stone-700 uppercase mb-1">Full Name</label>
-                        <input type="text" name="name" required placeholder="e.g. John Doe" class="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:border-orange-500">
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Full Name</label>
+                        <input type="text" name="name" required placeholder="e.g. John Doe" class="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:border-gray-500">
                     </div>
 
                     <div>
-                        <label class="block text-xs font-bold text-stone-700 uppercase mb-1">Email Address</label>
-                        <input type="email" name="email" required placeholder="attendant@jengo.com" class="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:border-orange-500">
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Email Address</label>
+                        <input type="email" name="email" required placeholder="attendant@jengo.com" class="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:border-gray-500">
                     </div>
 
                     <div>
-                        <label class="block text-xs font-bold text-stone-700 uppercase mb-1">Phone Number</label>
-                        <input type="text" name="phone" placeholder="254700000000" class="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:border-orange-500">
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Phone Number</label>
+                        <input type="text" name="phone" placeholder="254700000000" class="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:border-gray-500">
                     </div>
 
                     <div>
-                        <label class="block text-xs font-bold text-stone-700 uppercase mb-1">Password</label>
-                        <input type="password" name="password" required placeholder="••••••••" class="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:border-orange-500">
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Password</label>
+                        <input type="password" name="password" required placeholder="••••••••" class="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:border-gray-500">
                     </div>
 
-                    <button type="submit" class="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-2.5 rounded transition text-sm">
+                    <button type="submit" class="w-full bg-gray-800 hover:bg-gray-700 text-white font-bold py-2.5 rounded transition text-sm">
                         Create Attendant Account
                     </button>
                 </form>
             </div>
 
             <!-- Existing Attendants Table -->
-            <div class="lg:col-span-2 bg-white p-6 rounded-lg shadow-sm border border-stone-200">
-                <h2 class="text-lg font-bold mb-4 text-stone-900">Enrolled Attendants</h2>
+            <div class="lg:col-span-2 bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                <h2 class="text-lg font-bold mb-4 text-gray-900">Enrolled Attendants</h2>
                 <?php if (empty($attendants)): ?>
-                    <p class="text-stone-500 text-sm">No dedicated attendants enrolled yet.</p>
+                    <p class="text-gray-500 text-sm">No dedicated attendants enrolled yet.</p>
                 <?php else: ?>
                     <div class="overflow-x-auto">
                         <table class="w-full text-left border-collapse">
                             <thead>
-                                <tr class="border-b bg-stone-50 text-stone-600 text-xs uppercase tracking-wider">
+                                <tr class="border-b bg-gray-50 text-gray-600 text-xs uppercase tracking-wider">
                                     <th class="p-3">ID</th>
                                     <th class="p-3">Name</th>
                                     <th class="p-3">Email</th>
@@ -152,15 +154,15 @@ try {
                                     <th class="p-3">Role</th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-stone-100 text-sm">
+                            <tbody class="divide-y divide-gray-100 text-sm">
                                 <?php foreach ($attendants as $att): ?>
-                                    <tr class="hover:bg-stone-50 transition">
+                                    <tr class="hover:bg-gray-50 transition">
                                         <td class="p-3 font-mono font-bold">#<?= $att['id'] ?></td>
-                                        <td class="p-3 font-bold text-stone-900"><?= htmlspecialchars($att['name']) ?></td>
-                                        <td class="p-3 text-stone-600"><?= htmlspecialchars($att['email']) ?></td>
-                                        <td class="p-3 text-stone-500 text-xs font-mono"><?= htmlspecialchars($att['phone'] ?? 'N/A') ?></td>
+                                        <td class="p-3 font-bold text-gray-900"><?= htmlspecialchars($att['name']) ?></td>
+                                        <td class="p-3 text-gray-600"><?= htmlspecialchars($att['email']) ?></td>
+                                        <td class="p-3 text-gray-500 text-xs font-mono"><?= htmlspecialchars($att['phone'] ?? 'N/A') ?></td>
                                         <td class="p-3">
-                                            <span class="px-2 py-0.5 text-xs font-extrabold uppercase rounded bg-amber-100 text-amber-800">
+                                            <span class="px-2 py-0.5 text-xs font-extrabold uppercase rounded bg-gray-200 text-gray-900">
                                                 <?= htmlspecialchars($att['role']) ?>
                                             </span>
                                         </td>
