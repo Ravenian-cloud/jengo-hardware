@@ -68,9 +68,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="css/liquid-glass.css">
     <script src="js/theme-mode.js" defer></script>
 </head>
-<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+<body class="bg-gray-100 min-h-screen flex flex-col items-center p-4">
 
-    <div class="bg-white p-8 rounded-lg shadow-md max-w-md w-full border-t-4 border-gray-500">
+    <div class="auth-card bg-white p-8 rounded-lg shadow-md max-w-md w-full border-t-4 border-gray-500">
         <div class="text-center mb-6">
             <a href="home.php" class="text-2xl font-black text-gray-300 tracking-wider">JENGO HARDWARE</a>
             <p class="text-gray-500 text-sm mt-1">Sign in to your account</p>
@@ -103,5 +103,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </p>
     </div>
 
+    <?php require __DIR__ . '/footer.php'; ?>
 </body>
 </html>

@@ -31,7 +31,7 @@ try {
     <link rel="stylesheet" href="css/liquid-glass.css">
     <script src="js/theme-mode.js" defer></script>
 </head>
-<body class="bg-gray-50 text-gray-800 min-h-screen">
+<body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col">
 
     <!-- Navbar -->
     <nav class="bg-gray-900 text-white shadow-md">
@@ -45,7 +45,7 @@ try {
         </div>
     </nav>
 
-    <div class="max-w-7xl mx-auto px-4 py-8">
+    <div class="max-w-7xl mx-auto px-4 py-8 flex-grow w-full">
         <h1 class="text-3xl font-bold mb-2">Welcome, <?= htmlspecialchars($_SESSION['user_name'] ?? 'Customer') ?></h1>
         <p class="text-gray-500 mb-8">Manage your profile and track your hardware orders.</p>
 
@@ -88,5 +88,6 @@ try {
         </div>
     </div>
 
+    <?php require __DIR__ . '/footer.php'; ?>
 </body>
 </html>

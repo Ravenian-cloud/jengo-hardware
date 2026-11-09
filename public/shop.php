@@ -105,7 +105,7 @@ $isAttendant = isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'atte
         <form method="GET" action="shop.php" class="bg-white p-4 rounded-lg shadow-sm mb-8 flex flex-col md:flex-row gap-4">
             <input type="text" name="search" value="<?= htmlspecialchars($searchQuery) ?>" placeholder="Search products..." class="flex-grow px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500">
             
-            <select name="category" class="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500">
+            <select name="category" class="category-select px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500">
                 <option value="">All Categories</option>
                 <?php foreach ($categories as $cat): ?>
                     <option value="<?= $cat['id'] ?>" <?= $selectedCategory == $cat['id'] ? 'selected' : '' ?>>
@@ -133,7 +133,7 @@ $isAttendant = isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'atte
                             <h3 class="text-lg font-bold mt-1 text-gray-900"><?= htmlspecialchars($prod['name']) ?></h3>
                             <div class="mt-auto pt-4 flex justify-between items-center">
                                 <span class="text-xl font-extrabold text-gray-800">KES <?= number_format($prod['price'], 2) ?></span>
-                                <span class="text-xs px-2 py-1 rounded <?= $prod['stock'] > 0 ? 'bg-gray-100 text-gray-800' : 'bg-gray-200 text-gray-900' ?>">
+                                <span class="stock-status text-xs px-2 py-1 rounded <?= $prod['stock'] > 0 ? 'stock-status--available bg-gray-100 text-gray-800' : 'stock-status--unavailable bg-gray-200 text-gray-900' ?>">
                                     <?= $prod['stock'] > 0 ? 'In Stock (' . $prod['stock'] . ')' : 'Out of Stock' ?>
                                 </span>
                             </div>
@@ -164,5 +164,6 @@ $isAttendant = isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'atte
         <?php endif; ?>
     </div>
 
+    <?php require __DIR__ . '/footer.php'; ?>
 </body>
 </html>

@@ -102,9 +102,7 @@ $cartCount = isset($_SESSION['cart']) ? array_sum($_SESSION['cart']) : 0;
         </div>
     </div>
 
-    <footer class="bg-gray-900 text-gray-400 py-6 text-center text-sm border-t border-gray-800">
-        &copy; <?= date('Y') ?> Jengo Hardware. All rights reserved.
-    </footer>
+    <?php require __DIR__ . '/footer.php'; ?>
 
 </body>
 </html>

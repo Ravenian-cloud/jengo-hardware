@@ -13,6 +13,9 @@
     --glass-control-edge: rgba(255, 255, 255, 0.46);
     --glass-action: rgba(15, 23, 42, 0.74);
     --glass-action-hover: rgba(15, 23, 42, 0.84);
+    --glass-nav-surface: rgba(15, 23, 42, 0.78);
+    --glass-nav-fallback: rgba(15, 23, 42, 0.96);
+    --glass-item-hover: rgba(56, 189, 248, 0.14);
 }
 
 body {
@@ -43,6 +46,9 @@ body[data-theme="day"] {
     --glass-control-edge: rgba(255, 255, 255, 0.48);
     --glass-action: rgba(15, 23, 42, 0.76);
     --glass-action-hover: rgba(15, 23, 42, 0.86);
+    --glass-nav-surface: rgba(15, 23, 42, 0.78);
+    --glass-nav-fallback: rgba(15, 23, 42, 0.96);
+    --glass-item-hover: rgba(56, 189, 248, 0.14);
     background-color: #e0e7ff !important;
     background-image:
         radial-gradient(48rem circle at 8% 8%, rgba(251, 113, 133, 0.38), transparent 58%),
@@ -53,6 +59,7 @@ body[data-theme="day"] {
 
 body[data-theme="night"] {
     color-scheme: dark;
+    color: #f8fafc !important;
     --glass-surface: rgba(255, 255, 255, 0.09);
     --glass-fallback: rgba(15, 23, 42, 0.94);
     --glass-edge: rgba(34, 211, 238, 0.42);
@@ -66,20 +73,46 @@ body[data-theme="night"] {
     --glass-control-edge: rgba(255, 255, 255, 0.26);
     --glass-action: rgba(255, 255, 255, 0.14);
     --glass-action-hover: rgba(255, 255, 255, 0.22);
-    background-color: #0b1020 !important;
+    --glass-nav-surface: rgba(15, 23, 42, 0.64);
+    --glass-nav-fallback: rgba(15, 23, 42, 0.98);
+    --glass-item-hover: rgba(56, 189, 248, 0.16);
+    background-color: #070b16 !important;
     background-image:
-        radial-gradient(48rem circle at 8% 8%, rgba(124, 58, 237, 0.38), transparent 58%),
-        radial-gradient(44rem circle at 94% 10%, rgba(8, 145, 178, 0.32), transparent 56%),
-        radial-gradient(48rem circle at 72% 95%, rgba(190, 24, 93, 0.22), transparent 58%),
-        linear-gradient(135deg, #0b1020 0%, #172554 48%, #1e1b4b 100%) !important;
+        radial-gradient(48rem circle at 8% 8%, rgba(124, 58, 237, 0.28), transparent 58%),
+        radial-gradient(44rem circle at 94% 10%, rgba(8, 145, 178, 0.22), transparent 56%),
+        radial-gradient(48rem circle at 72% 95%, rgba(190, 24, 93, 0.16), transparent 58%),
+        linear-gradient(135deg, #070b16 0%, #0d1930 48%, #15102a 100%) !important;
 }
 
 @media (prefers-color-scheme: dark) {
-    :root {
+    body:not([data-theme="day"]) {
+        color-scheme: dark;
+        color: #f8fafc !important;
+        --glass-surface: rgba(255, 255, 255, 0.09);
+        --glass-fallback: rgba(15, 23, 42, 0.94);
         --glass-edge: rgba(34, 211, 238, 0.42);
         --glass-highlight: rgba(103, 232, 249, 0.44);
         --glass-sheen: rgba(56, 189, 248, 0.18);
+        --glass-shade: rgba(0, 0, 0, 0.16);
         --glass-shadow: 0 10px 36px rgba(0, 0, 0, 0.36), 0 0 24px rgba(34, 211, 238, 0.2);
+        --glass-foreground: #f8fafc;
+        --glass-muted: #cbd5e1;
+        --glass-control: rgba(255, 255, 255, 0.1);
+        --glass-control-edge: rgba(255, 255, 255, 0.26);
+        --glass-action: rgba(255, 255, 255, 0.14);
+        --glass-action-hover: rgba(255, 255, 255, 0.22);
+        --glass-nav-surface: rgba(15, 23, 42, 0.64);
+        --glass-nav-fallback: rgba(15, 23, 42, 0.98);
+        --glass-item-hover: rgba(56, 189, 248, 0.16);
+    }
+
+    body:not([data-theme="day"]) {
+        background-color: #070b16 !important;
+        background-image:
+            radial-gradient(48rem circle at 8% 8%, rgba(124, 58, 237, 0.28), transparent 58%),
+            radial-gradient(44rem circle at 94% 10%, rgba(8, 145, 178, 0.22), transparent 56%),
+            radial-gradient(48rem circle at 72% 95%, rgba(190, 24, 93, 0.16), transparent 58%),
+            linear-gradient(135deg, #070b16 0%, #0d1930 48%, #15102a 100%) !important;
     }
 }
 
@@ -97,6 +130,88 @@ body > aside,
         inset 0 1px 0 var(--glass-highlight),
         inset 1px 0 0 var(--glass-highlight),
         inset 0 -1px 0 var(--glass-shade);
+}
+
+.site-footer {
+    width: 100%;
+    margin-top: auto;
+    border-radius: 22px 22px 0 0;
+    color: var(--glass-foreground);
+}
+
+.site-footer__content {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2rem;
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 1.75rem;
+}
+
+.site-footer__content section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+}
+
+.site-footer__brand {
+    color: var(--glass-foreground);
+    font-weight: 800;
+    letter-spacing: 0.08em;
+}
+
+.site-footer__heading {
+    margin: 0 0 0.25rem;
+    color: var(--glass-foreground);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.site-footer p,
+.site-footer address,
+.site-footer a:not(.site-footer__brand) {
+    margin: 0;
+    color: var(--glass-muted);
+    font-size: 0.875rem;
+    font-style: normal;
+    line-height: 1.6;
+}
+
+.site-footer a:hover {
+    color: var(--glass-foreground);
+    text-decoration: underline;
+}
+
+.site-footer__bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.5rem 1rem;
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 1rem 1.5rem 1.5rem;
+    border-top: 1px solid var(--glass-edge);
+    color: var(--glass-muted);
+    font-size: 0.75rem;
+}
+
+.auth-card {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+@media (max-width: 640px) {
+    .site-footer__content {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .site-footer__bottom {
+        flex-direction: column;
+    }
 }
 
 .glass::before,
@@ -117,10 +232,12 @@ body > nav {
     top: 0;
     z-index: 40;
     border-radius: 0 0 22px 22px;
+    background-color: var(--glass-nav-fallback) !important;
 }
 
 body > aside {
     border-radius: 0 22px 22px 0;
+    background-color: var(--glass-nav-fallback) !important;
 }
 
 body > nav a,
@@ -144,7 +261,6 @@ body > aside nav a[class~="bg-gray-800"] {
 [class~="bg-white"] {
     color: var(--glass-foreground);
     border-color: var(--glass-edge);
-    backdrop-filter: none;
 }
 
 body[data-theme="day"] [class~="bg-white"] .text-gray-400 {
@@ -170,10 +286,16 @@ body > aside {
 
 @supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
     .glass,
-    body > nav,
     body > aside,
     [class~="bg-white"] {
         background-color: var(--glass-surface) !important;
+        -webkit-backdrop-filter: blur(22px) saturate(175%) brightness(1.05);
+        backdrop-filter: blur(22px) saturate(175%) brightness(1.05);
+    }
+
+    body > nav,
+    body > aside {
+        background-color: var(--glass-nav-surface) !important;
         -webkit-backdrop-filter: blur(22px) saturate(175%) brightness(1.05);
         backdrop-filter: blur(22px) saturate(175%) brightness(1.05);
     }
@@ -187,6 +309,8 @@ textarea {
     background-color: var(--glass-control) !important;
     color: var(--glass-foreground);
     box-shadow: inset 0 1px 0 var(--glass-highlight), inset 0 -1px 0 var(--glass-shade);
+    -webkit-backdrop-filter: blur(14px) saturate(160%);
+    backdrop-filter: blur(14px) saturate(160%);
 }
 
 input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]):focus,
@@ -201,6 +325,15 @@ select {
     color-scheme: light;
 }
 
+.category-select {
+    background-color: var(--glass-control) !important;
+    background-image: linear-gradient(135deg, var(--glass-sheen), transparent 62%);
+    border-color: var(--glass-control-edge);
+    box-shadow: inset 0 1px 0 var(--glass-highlight), inset 0 -1px 0 var(--glass-shade);
+    -webkit-backdrop-filter: blur(20px) saturate(180%) brightness(1.05);
+    backdrop-filter: blur(20px) saturate(180%) brightness(1.05);
+}
+
 body[data-theme="night"] select {
     color-scheme: dark;
 }
@@ -213,6 +346,13 @@ select option {
 body[data-theme="night"] select option {
     color: #f8fafc;
     background-color: #111827;
+}
+
+@media (prefers-color-scheme: dark) {
+    body:not([data-theme="day"]) select option {
+        color: #f8fafc;
+        background-color: #111827;
+    }
 }
 
 button,
@@ -230,17 +370,13 @@ a[class~="bg-gray-200"] {
     -webkit-tap-highlight-color: transparent;
 }
 
-button:not(:disabled),
-a[class~="bg-gray-800"],
-a[class~="bg-gray-700"],
-a[class~="bg-gray-200"] {
-    will-change: transform;
-}
-
 button[class~="bg-gray-800"],
 button[class~="bg-gray-700"],
+button[class*="bg-stone-"],
+button[class*="bg-orange-"],
 a[class~="bg-gray-800"],
-a[class~="bg-gray-700"] {
+a[class~="bg-gray-700"],
+a[class*="bg-orange-"] {
     border: 1px solid var(--glass-edge);
     background-color: var(--glass-action) !important;
     color: #fff !important;
@@ -250,6 +386,7 @@ a[class~="bg-gray-700"] {
 
 button[class~="bg-gray-200"],
 button[class~="bg-gray-300"],
+a[class*="bg-stone-"],
 a[class~="bg-gray-200"] {
     border: 1px solid var(--glass-control-edge);
     background-color: var(--glass-control) !important;
@@ -261,7 +398,11 @@ a[class~="bg-gray-200"] {
 button:hover:not(:disabled),
 a[class~="bg-gray-800"]:hover,
 a[class~="bg-gray-700"]:hover,
-a[class~="bg-gray-200"]:hover {
+a[class~="bg-gray-200"]:hover,
+a[class*="bg-orange-"]:hover,
+button[class*="bg-stone-"]:hover,
+button[class*="bg-orange-"]:hover {
+    will-change: transform;
     filter: brightness(1.08);
     transform: translateY(-1px) scale(1.02);
     box-shadow: 0 10px 24px rgba(15, 23, 42, 0.2), inset 0 1px 0 var(--glass-highlight);
@@ -270,19 +411,21 @@ a[class~="bg-gray-200"]:hover {
 button:active:not(:disabled),
 a[class~="bg-gray-800"]:active,
 a[class~="bg-gray-700"]:active,
-a[class~="bg-gray-200"]:active {
+a[class~="bg-gray-200"]:active,
+a[class*="bg-orange-"]:active,
+button[class*="bg-stone-"]:active,
+button[class*="bg-orange-"]:active {
     transform: scale(0.98);
     filter: brightness(0.98);
 }
 
-body[data-theme="night"] [class~="bg-gray-50"],
-body[data-theme="night"] [class~="bg-gray-100"],
-body[data-theme="night"] [class~="bg-gray-200"],
-body[data-theme="night"] [class~="bg-gray-300"] {
-    background-color: rgba(255, 255, 255, 0.1) !important;
-    border-color: rgba(255, 255, 255, 0.18);
-    -webkit-backdrop-filter: blur(12px) saturate(155%);
-    backdrop-filter: blur(12px) saturate(155%);
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid rgba(59, 130, 246, 0.78);
+    outline-offset: 3px;
 }
 
 body[data-theme="night"] .text-gray-900,
@@ -295,6 +438,80 @@ body[data-theme="night"] .text-gray-600,
 body[data-theme="night"] .text-gray-500,
 body[data-theme="night"] .text-gray-400 {
     color: #cbd5e1 !important;
+}
+
+body[data-theme="night"] .text-stone-900,
+body[data-theme="night"] .text-stone-800,
+body[data-theme="night"] .text-stone-700 {
+    color: #f8fafc !important;
+}
+
+body[data-theme="night"] .text-stone-600,
+body[data-theme="night"] .text-stone-500,
+body[data-theme="night"] .text-stone-400 {
+    color: #cbd5e1 !important;
+}
+
+body[data-theme="night"] .stock-status--available {
+    background-color: rgba(16, 185, 129, 0.18) !important;
+    border: 1px solid rgba(52, 211, 153, 0.42);
+    box-shadow: inset 0 1px 0 rgba(167, 243, 208, 0.2);
+    color: #a7f3d0 !important;
+}
+
+body[data-theme="night"] .stock-status--unavailable {
+    background-color: rgba(148, 163, 184, 0.12) !important;
+    border: 1px solid rgba(148, 163, 184, 0.24);
+    color: #cbd5e1 !important;
+}
+
+body[data-theme="night"] tr:hover,
+body[data-theme="night"] [class~="hover:bg-gray-50"]:hover,
+body[data-theme="night"] [class~="hover:bg-stone-50"]:hover {
+    background-color: var(--glass-item-hover) !important;
+    background-image: linear-gradient(110deg, rgba(125, 211, 252, 0.1), rgba(167, 139, 250, 0.08)) !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), inset 0 -1px 0 rgba(255, 255, 255, 0.06);
+}
+
+@media (prefers-color-scheme: dark) {
+    body:not([data-theme="day"]) .stock-status--available {
+        background-color: rgba(16, 185, 129, 0.18) !important;
+        border: 1px solid rgba(52, 211, 153, 0.42);
+        box-shadow: inset 0 1px 0 rgba(167, 243, 208, 0.2);
+        color: #a7f3d0 !important;
+    }
+
+    body:not([data-theme="day"]) .stock-status--unavailable {
+        background-color: rgba(148, 163, 184, 0.12) !important;
+        border: 1px solid rgba(148, 163, 184, 0.24);
+        color: #cbd5e1 !important;
+    }
+
+    body:not([data-theme="day"]) tr:hover,
+    body:not([data-theme="day"]) [class~="hover:bg-gray-50"]:hover,
+    body:not([data-theme="day"]) [class~="hover:bg-stone-50"]:hover {
+        background-color: var(--glass-item-hover) !important;
+        background-image: linear-gradient(110deg, rgba(125, 211, 252, 0.1), rgba(167, 139, 250, 0.08)) !important;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), inset 0 -1px 0 rgba(255, 255, 255, 0.06);
+    }
+
+    body:not([data-theme="day"]) .text-gray-900,
+    body:not([data-theme="day"]) .text-gray-800,
+    body:not([data-theme="day"]) .text-gray-700,
+    body:not([data-theme="day"]) .text-stone-900,
+    body:not([data-theme="day"]) .text-stone-800,
+    body:not([data-theme="day"]) .text-stone-700 {
+        color: #f8fafc !important;
+    }
+
+    body:not([data-theme="day"]) .text-gray-600,
+    body:not([data-theme="day"]) .text-gray-500,
+    body:not([data-theme="day"]) .text-gray-400,
+    body:not([data-theme="day"]) .text-stone-600,
+    body:not([data-theme="day"]) .text-stone-500,
+    body:not([data-theme="day"]) .text-stone-400 {
+        color: #cbd5e1 !important;
+    }
 }
 
 .theme-mode-toggle {
@@ -336,6 +553,17 @@ body[data-theme="night"] .text-gray-400 {
     .theme-mode-toggle {
         background-color: var(--glass-fallback) !important;
     }
+
+    body > nav,
+    body > aside {
+        background-color: var(--glass-nav-fallback) !important;
+    }
+
+    input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]),
+    select,
+    textarea {
+        background-color: var(--glass-fallback) !important;
+    }
 }
 
 @media (prefers-reduced-transparency: reduce) {
@@ -344,6 +572,19 @@ body[data-theme="night"] .text-gray-400 {
     body > aside,
     [class~="bg-white"],
     .theme-mode-toggle {
+        background-color: var(--glass-fallback) !important;
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+    }
+
+    body > nav,
+    body > aside {
+        background-color: var(--glass-nav-fallback) !important;
+    }
+
+    input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]),
+    select,
+    textarea {
         background-color: var(--glass-fallback) !important;
         -webkit-backdrop-filter: none;
         backdrop-filter: none;

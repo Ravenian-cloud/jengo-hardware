@@ -56,8 +56,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="css/liquid-glass.css">
     <script src="js/theme-mode.js" defer></script>
 </head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen">
-    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md border-t-4 border-gray-600">
+<body class="bg-gray-100 flex flex-col items-center min-h-screen p-4">
+    <div class="auth-card bg-white p-8 rounded-lg shadow-md w-full max-w-md border-t-4 border-gray-600">
         <h2 class="text-2xl font-bold text-center text-gray-800 mb-2">Jengo Hardware</h2>
         <p class="text-center text-gray-500 mb-6 text-sm">Create a new customer account</p>
         
@@ -93,5 +93,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </form>
         <p class="text-sm text-center text-gray-600 mt-5">Already registered? <a href="login.php" class="text-gray-700 font-bold hover:underline">Log in</a></p>
     </div>
+    <?php require __DIR__ . '/footer.php'; ?>
 </body>
 </html>

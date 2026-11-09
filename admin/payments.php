@@ -61,7 +61,7 @@ try {
         <div class="flex justify-between items-center mb-8">
             <div>
                 <h1 class="text-3xl font-bold">Payment Transactions</h1>
-                <p class="text-gray-500 text-sm">Monitor all incoming M-Pesa STK Push and Paystack transactions.</p>
+                <p class="text-gray-500 text-sm">Monitor all incoming M-Pesa STK Push transactions.</p>
             </div>
             <div class="bg-white p-4 rounded-lg border shadow-sm text-right">
                 <span class="text-xs text-gray-500 font-bold uppercase block">Total Revenue Cleared</span>
@@ -75,7 +75,7 @@ try {
             <?php if (empty($payments)): ?>
                 <div class="text-center py-12">
                     <p class="text-gray-500 text-base mb-2">No payment transactions found in database.</p>
-                    <p class="text-xs text-gray-400">Transactions will automatically record here when users pay via M-Pesa or Paystack.</p>
+                    <p class="text-xs text-gray-400">Transactions will automatically record here when users pay via M-Pesa.</p>
                 </div>
             <?php else: ?>
                 <div class="overflow-x-auto">

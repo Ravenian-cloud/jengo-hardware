@@ -62,7 +62,7 @@ $user = $userStmt->fetch();
     <link rel="stylesheet" href="css/liquid-glass.css">
     <script src="js/theme-mode.js" defer></script>
 </head>
-<body class="bg-gray-50 text-gray-800 min-h-screen">
+<body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col">
 
     <!-- Navbar -->
     <nav class="bg-gray-900 text-white shadow-md">
@@ -76,7 +76,7 @@ $user = $userStmt->fetch();
         </div>
     </nav>
 
-    <div class="max-w-4xl mx-auto px-4 py-8">
+    <div class="max-w-4xl mx-auto px-4 py-8 flex-grow w-full">
         <h1 class="text-3xl font-bold mb-6">Order Checkout</h1>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -108,15 +108,6 @@ $user = $userStmt->fetch();
                     </div>
                 </form>
 
-                <div class="mt-4 text-center">
-                    <span class="text-xs text-gray-400 uppercase font-bold">— OR —</span>
-                    <form action="../api/paystack_init.php" method="POST" class="mt-3">
-                        <input type="hidden" name="amount" value="<?= $totalAmount ?>">
-                        <button type="submit" class="w-full bg-gray-700 hover:bg-gray-800 text-white font-bold py-3 rounded-lg">
-                            Pay with Paystack (Card / M-Pesa)
-                        </button>
-                    </form>
-                </div>
             </div>
 
             <!-- Order Summary -->
@@ -138,5 +129,6 @@ $user = $userStmt->fetch();
         </div>
     </div>
 
+    <?php require __DIR__ . '/footer.php'; ?>
 </body>
 </html>
