@@ -27,7 +27,11 @@ body {
         radial-gradient(48rem circle at 8% 8%, rgba(251, 113, 133, 0.38), transparent 58%),
         radial-gradient(44rem circle at 94% 10%, rgba(56, 189, 248, 0.38), transparent 56%),
         radial-gradient(48rem circle at 72% 95%, rgba(167, 139, 250, 0.34), transparent 58%),
-        linear-gradient(135deg, #fff7ed 0%, #e0f2fe 48%, #f5f3ff 100%) !important;
+        linear-gradient(135deg, rgba(255, 247, 237, 0.76), rgba(224, 242, 254, 0.78) 48%, rgba(245, 243, 255, 0.8)),
+        url("../images/products/cement-bags.jpg") !important;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: auto, auto, auto, auto, cover;
     background-attachment: fixed;
 }
 
@@ -54,7 +58,11 @@ body[data-theme="day"] {
         radial-gradient(48rem circle at 8% 8%, rgba(251, 113, 133, 0.38), transparent 58%),
         radial-gradient(44rem circle at 94% 10%, rgba(56, 189, 248, 0.38), transparent 56%),
         radial-gradient(48rem circle at 72% 95%, rgba(167, 139, 250, 0.34), transparent 58%),
-        linear-gradient(135deg, #fff7ed 0%, #e0f2fe 48%, #f5f3ff 100%) !important;
+        linear-gradient(135deg, rgba(255, 247, 237, 0.76), rgba(224, 242, 254, 0.78) 48%, rgba(245, 243, 255, 0.8)),
+        url("../images/products/cement-bags.jpg") !important;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: auto, auto, auto, auto, cover;
 }
 
 body[data-theme="night"] {
@@ -81,7 +89,11 @@ body[data-theme="night"] {
         radial-gradient(48rem circle at 8% 8%, rgba(124, 58, 237, 0.28), transparent 58%),
         radial-gradient(44rem circle at 94% 10%, rgba(8, 145, 178, 0.22), transparent 56%),
         radial-gradient(48rem circle at 72% 95%, rgba(190, 24, 93, 0.16), transparent 58%),
-        linear-gradient(135deg, #070b16 0%, #0d1930 48%, #15102a 100%) !important;
+        linear-gradient(135deg, rgba(7, 11, 22, 0.82), rgba(13, 25, 48, 0.84) 48%, rgba(21, 16, 42, 0.86)),
+        url("../images/products/cement-bags.jpg") !important;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: auto, auto, auto, auto, cover;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -112,7 +124,11 @@ body[data-theme="night"] {
             radial-gradient(48rem circle at 8% 8%, rgba(124, 58, 237, 0.28), transparent 58%),
             radial-gradient(44rem circle at 94% 10%, rgba(8, 145, 178, 0.22), transparent 56%),
             radial-gradient(48rem circle at 72% 95%, rgba(190, 24, 93, 0.16), transparent 58%),
-            linear-gradient(135deg, #070b16 0%, #0d1930 48%, #15102a 100%) !important;
+            linear-gradient(135deg, rgba(7, 11, 22, 0.82), rgba(13, 25, 48, 0.84) 48%, rgba(21, 16, 42, 0.86)),
+            url("../images/products/cement-bags.jpg") !important;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: auto, auto, auto, auto, cover;
     }
 }
 

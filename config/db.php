@@ -23,3 +23,8 @@ try {
 } catch (\PDOException $e) {
     throw new \PDOException($e->getMessage(), (int)$e->getCode());
 }
+
+if (session_status() === PHP_SESSION_ACTIVE) {
+    require_once __DIR__ . '/remember_me.php';
+    restoreRememberMeSession($pdo);
+}
