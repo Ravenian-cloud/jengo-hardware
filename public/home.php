@@ -13,7 +13,7 @@ try {
     $categories = $catStmt->fetchAll();
 
     // Fetch featured products
-    $prodStmt = $pdo->query("SELECT p.*, c.name AS category_name FROM products p JOIN categories c ON p.category_id = c.id ORDER BY p.id DESC LIMIT 6");
+    $prodStmt = $pdo->query("SELECT p.*, c.name AS category_name FROM products p JOIN categories c ON p.category_id = c.id ORDER BY p.id DESC LIMIT 8");
     $products = $prodStmt->fetchAll();
 } catch (\PDOException $e) {
     die("Database Error on Home Page: " . $e->getMessage());
@@ -40,6 +40,7 @@ $cartCount = isset($_SESSION['cart']) ? array_sum($_SESSION['cart']) : 0;
             <div class="space-x-6">
                 <a href="home.php" class="text-gray-300 font-medium">Home</a>
                 <a href="shop.php" class="hover:text-gray-300 font-medium">Shop</a>
+                <a href="reviews.php" class="hover:text-gray-300 font-medium">Reviews</a>
                 <?php if (($_SESSION['user_role'] ?? '') !== 'attendant'): ?>
                     <a href="cart.php" class="hover:text-gray-300 font-medium">Cart (<?= $cartCount ?>)</a>
                 <?php endif; ?>

@@ -37,9 +37,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     } else {
         try {
             $photo = product_image_for_item($name, $categoryName);
-            $stmt = $pdo->prepare("INSERT INTO products (category_id, name, category, price, stock, description, photo) VALUES (?, ?, ?, ?, ?, ?, ?)");
-            $stmt->execute([$category_id, $name, $categoryName, $price, $stock, $description, $photo]);
-            $msg = "Product '{$name}' successfully added to inventory!";
+            $image = $_FILES['image'] ?? null;
+
+            if ($image !== null && $image['error'] !== UPLOAD_ERR_NO_FILE) {
+                $allowedTypes = ['image/jpeg' => 'jpg', 'image/png' => 'png', 'image/webp' => 'webp'];
+                $fileInfo = new finfo(FILEINFO_MIME_TYPE);
+                $mimeType = $image['error'] === UPLOAD_ERR_OK ? $fileInfo->file($image['tmp_name']) : false;
+
+                if ($image['error'] !== UPLOAD_ERR_OK) {
+                    $error = 'The image upload failed. Please try again.';
+                } elseif ($image['size'] > 5 * 1024 * 1024) {
+                    $error = 'The image must be 5 MB or smaller.';
+                } elseif (!isset($allowedTypes[$mimeType]) || getimagesize($image['tmp_name']) === false) {
+                    $error = 'Please upload a valid JPG, PNG, or WebP image.';
+                } else {
+                    $uploadDirectory = __DIR__ . '/../public/uploads/products';
+                    if (!is_dir($uploadDirectory) && !mkdir($uploadDirectory, 0755, true) && !is_dir($uploadDirectory)) {
+                        $error = 'Unable to create the product image directory.';
+                    } else {
+                        $fileName = bin2hex(random_bytes(16)) . '.' . $allowedTypes[$mimeType];
+                        if (move_uploaded_file($image['tmp_name'], $uploadDirectory . '/' . $fileName)) {
+                            $photo = 'uploads/products/' . $fileName;
+                        } else {
+                            $error = 'Unable to save the uploaded image.';
+                        }
+                    }
+                }
+            }
+
+            if ($error === '') {
+                $stmt = $pdo->prepare("INSERT INTO products (category_id, name, category, price, stock, description, photo) VALUES (?, ?, ?, ?, ?, ?, ?)");
+                $stmt->execute([$category_id, $name, $categoryName, $price, $stock, $description, $photo]);
+                $msg = "Product '{$name}' successfully added to inventory!";
+            }
         } catch (\PDOException $e) {
             $error = "Database Error: " . $e->getMessage();
         }
@@ -142,7 +172,7 @@ try {
                         <code class="mt-1 block break-all">{"name":"Cement 50kg","category":"Cement","price":750.00,"stock":20,"description":"General purpose cement"}</code>
                     </details>
                 </div>
-                <form method="POST" action="inventory.php" class="space-y-4">
+                <form method="POST" action="inventory.php" enctype="multipart/form-data" class="space-y-4">
                     <input type="hidden" name="action" value="add_product">
 
                     <div>
@@ -174,6 +204,12 @@ try {
                     <div>
                         <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Description</label>
                         <textarea id="product-description" name="description" rows="3" placeholder="Brief product specifications..." class="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:border-gray-500"></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Product Photo (optional; JPG, PNG, or WebP, max 5 MB)</label>
+                        <input type="file" name="image" accept="image/jpeg,image/png,image/webp" class="w-full border rounded px-3 py-2 text-sm">
+                        <p class="mt-1 text-xs text-gray-500">Upload a photo of the exact product. If omitted, a representative category photo is used.</p>
                     </div>
 
                     <button type="submit" class="w-full bg-gray-800 hover:bg-gray-700 text-white font-bold py-2.5 rounded transition text-sm">

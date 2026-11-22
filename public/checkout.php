@@ -5,6 +5,7 @@ error_reporting(E_ALL);
 
 session_start();
 require_once __DIR__ . '/../config/db.php';
+require_once __DIR__ . '/../config/product_images.php';
 
 if (($_SESSION['user_role'] ?? '') === 'attendant') {
     header('Location: ../attendant/dashboard.php');
@@ -116,7 +117,10 @@ $user = $userStmt->fetch();
                 <div class="space-y-3 mb-4">
                     <?php foreach ($cartItems as $item): ?>
                         <div class="flex justify-between text-sm">
-                            <span><?= htmlspecialchars($item['product']['name']) ?> (x<?= $item['quantity'] ?>)</span>
+                            <span class="flex items-center gap-3">
+                                <img src="<?= htmlspecialchars(product_image_url($item['product']['photo'] ?? null), ENT_QUOTES, 'UTF-8') ?>" alt="<?= htmlspecialchars($item['product']['name'], ENT_QUOTES, 'UTF-8') ?>" class="h-12 w-12 rounded object-cover">
+                                <span><?= htmlspecialchars($item['product']['name']) ?> (x<?= $item['quantity'] ?>)</span>
+                            </span>
                             <span class="font-bold">KES <?= number_format($item['subtotal'], 2) ?></span>
                         </div>
                     <?php endforeach; ?>

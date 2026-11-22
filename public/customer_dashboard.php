@@ -40,6 +40,7 @@ try {
             <div class="space-x-6">
                 <a href="home.php" class="hover:text-gray-300 font-medium">Home</a>
                 <a href="shop.php" class="hover:text-gray-300 font-medium">Shop</a>
+                <a href="reviews.php" class="hover:text-gray-300 font-medium">Reviews</a>
                 <a href="logout.php" class="bg-gray-800 hover:bg-gray-700 px-4 py-2 rounded text-sm font-bold">Logout</a>
             </div>
         </div>

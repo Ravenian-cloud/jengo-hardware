@@ -15,6 +15,7 @@
             <h2 class="site-footer__heading">Get in touch</h2>
             <a href="tel:+254791986154">+254 791986154</a>
             <a href="mailto:iangichuki35@gmail.com">iangichuki35@gmail.com</a>
+            <a href="reviews.php">Customer reviews</a>
         </section>
     </div>
     <div class="site-footer__bottom">

@@ -5,6 +5,7 @@ error_reporting(E_ALL);
 
 session_start();
 require_once __DIR__ . '/../config/db.php';
+require_once __DIR__ . '/../config/product_images.php';
 
 // Auth Guard: Block Admin users from shopping cart actions
 if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin') {
@@ -128,7 +129,12 @@ $cartCount = array_sum($_SESSION['cart']);
                     <tbody>
                         <?php foreach ($cartItems as $item): ?>
                             <tr class="border-b hover:bg-stone-50 transition">
-                                <td class="p-4 font-bold text-stone-900"><?= htmlspecialchars($item['product']['name']) ?></td>
+                                <td class="p-4">
+                                    <div class="flex items-center gap-3">
+                                        <img src="<?= htmlspecialchars(product_image_url($item['product']['photo'] ?? null), ENT_QUOTES, 'UTF-8') ?>" alt="<?= htmlspecialchars($item['product']['name'], ENT_QUOTES, 'UTF-8') ?>" class="h-14 w-14 rounded object-cover">
+                                        <span class="font-bold text-stone-900"><?= htmlspecialchars($item['product']['name']) ?></span>
+                                    </div>
+                                </td>
                                 <td class="p-4 text-stone-700">KES <?= number_format($item['product']['price'], 2) ?></td>
                                 <td class="p-4">
                                     <form action="cart.php" method="POST" class="flex items-center gap-2">

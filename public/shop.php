@@ -60,6 +60,7 @@ $isAttendant = isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'atte
             <div class="space-x-6 flex items-center">
                 <a href="home.php" class="hover:text-gray-300 font-medium">Home</a>
                 <a href="shop.php" class="text-gray-300 font-medium">Shop</a>
+                <a href="reviews.php" class="hover:text-gray-300 font-medium">Reviews</a>
                 
                 <?php if ($isAdmin): ?>
                     <a href="../admin/dashboard.php" class="bg-gray-800 hover:bg-gray-700 px-4 py-2 rounded text-sm font-bold">Admin Dashboard</a>
